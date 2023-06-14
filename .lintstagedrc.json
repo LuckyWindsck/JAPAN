@@ -1,4 +1,5 @@
 {
-  "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "yarn lint",
+  "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "yarn lint:code",
+  "src/**/*.{css,vue}": "yarn lint:style",
   "src/**/*": "yarn format"
 }
