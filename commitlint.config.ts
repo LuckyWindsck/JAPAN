@@ -1,4 +1,4 @@
-import type {UserConfig} from '@commitlint/types';
+import type { UserConfig } from '@commitlint/types'
 
 const Configuration: UserConfig = {
   /*
@@ -6,6 +6,6 @@ const Configuration: UserConfig = {
    * Referenced packages must be installed
    */
   extends: ['@commitlint/config-conventional'],
-};
+}
 
-export default Configuration;
+export default Configuration
