@@ -1,7 +1,9 @@
-# Simple workflow for deploying static content to GitHub Pages
-# For more information see: https://vitejs.dev/guide/static-deploy.html#github-pages
+# Workflow for testing and deploying static content to GitHub Pages
+# For more information see:
+# Static deploy - https://vitejs.dev/guide/static-deploy.html#github-pages
+# Cypress - https://docs.cypress.io/guides/continuous-integration/github-actions
 
-name: Deploy static content to Pages
+name: Run tests and deploy static content to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -25,8 +27,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
+  run-tests-and-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -41,6 +42,8 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
+      - name: Unit tests
+        run: yarn test:unit run
       - name: End-to-end tests
         uses: cypress-io/github-action@v5
         with:
