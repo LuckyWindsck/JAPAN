@@ -1,5 +1,5 @@
 {
-  "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "yarn lint:code",
+  "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "yarn run-p type-check lint:code",
   "*.{css,vue}": "yarn lint:style",
   "*": "yarn format"
 }
