@@ -8,6 +8,7 @@ import SupportIcon from './icons/IconSupport.vue'
 </script>
 
 <template>
+  <!-- eslint-disable vue/no-template-target-blank -->
   <WelcomeItem>
     <template #icon>
       <DocumentationIcon />

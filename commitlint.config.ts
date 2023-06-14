@@ -8,4 +8,4 @@ const Configuration: UserConfig = {
   extends: ['@commitlint/config-conventional'],
 };
 
-module.exports = Configuration;
+export default Configuration;
