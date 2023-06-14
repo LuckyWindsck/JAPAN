@@ -41,5 +41,6 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
-  }
+  },
+  reportUnusedDisableDirectives: true
 }

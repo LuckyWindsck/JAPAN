@@ -18,7 +18,7 @@
 }
 
 /* semantic color variables for this project */
-/* stylelint-disable-next-line no-duplicate-selectors */
+/* stylelint-disable-next-line no-duplicate-selectors -- This problem is ignorable. */
 :root {
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
