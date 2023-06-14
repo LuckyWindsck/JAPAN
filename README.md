@@ -1,6 +1,6 @@
 # japan
 
-This template should help get you started developing with Vue 3 in Vite.
+Japanese Areal Poppulation Analytic Navigator that uses RESAS-API
 
 ## Recommended IDE Setup
 
