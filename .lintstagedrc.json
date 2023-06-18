@@ -1,5 +1,5 @@
 {
-  "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "yarn run-p type-check lint:code",
-  "*.{css,vue}": "yarn lint:style",
-  "*": "yarn format"
+  "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "eslint --fix --max-warnings 0",
+  "*.{css,vue}": "stylelint --fix --max-warnings 0",
+  "*": "prettier --write --ignore-unknown"
 }
