@@ -11,9 +11,15 @@
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-    "lint:code": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore --cache --cache-location node_modules/.cache/eslint/.eslintcache --max-warnings 0",
-    "lint:style": "stylelint \"src/**/*.{css,vue}\" --fix --ignore-path .gitignore --cache --cache-location node_modules/.cache/stylelint/.stylelintcache --max-warnings 0",
-    "format": "prettier --cache --write src/",
+    "linter:code": "eslint --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore --cache --cache-location node_modules/.cache/eslint/.eslintcache --max-warnings 0",
+    "lint:code": "yarn linter:code .",
+    "lint:code:fix": "yarn linter:code --fix .",
+    "linter:style": "stylelint --ignore-path .gitignore --cache --cache-location node_modules/.cache/stylelint/.stylelintcache --max-warnings 0",
+    "lint:style": "yarn linter:style \"src/**/*.{css,vue}\"",
+    "lint:style:fix": "yarn linter:style --fix \"src/**/*.{css,vue}\"",
+    "formatter": "prettier --cache --ignore-unknown",
+    "format": "yarn formatter --check src/",
+    "format:fix": "yarn formatter --write src/",
     "prepare": "husky install"
   },
   "dependencies": {
