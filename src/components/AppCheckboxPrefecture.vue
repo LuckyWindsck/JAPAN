@@ -12,10 +12,15 @@ defineProps({
 </script>
 
 <template>
-  <div>
+  <div class="prefecture-checkbox">
     <input :id="prefName" type="checkbox" name="prefecture" :value="prefCode" />
     <label :for="prefName">{{ prefName }}</label>
   </div>
 </template>
 
-<!-- <style scoped></style> -->
+<style scoped>
+.prefecture-checkbox {
+  display: flex;
+  column-gap: 1em;
+}
+</style>

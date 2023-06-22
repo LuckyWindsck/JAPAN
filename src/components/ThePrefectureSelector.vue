@@ -13,13 +13,22 @@ defineProps({
 </script>
 
 <template>
-  <AppCheckboxPrefecture
-    v-for="prefecture of prefectures"
-    :key="prefecture.prefCode"
-    :pref-code="prefecture.prefCode"
-    :pref-name="prefecture.prefName"
-    data-test-class="prefecture-checkbox"
-  />
+  <div class="prefecture-selector">
+    <AppCheckboxPrefecture
+      v-for="prefecture of prefectures"
+      :key="prefecture.prefCode"
+      :pref-code="prefecture.prefCode"
+      :pref-name="prefecture.prefName"
+      data-test-class="prefecture-checkbox"
+    />
+  </div>
 </template>
 
-<!-- <style scoped></style> -->
+<style scoped>
+.prefecture-selector {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 1em;
+  column-gap: 2em;
+}
+</style>
