@@ -45,6 +45,28 @@ module.exports = {
         project: ['./tsconfig.node.json', './tsconfig.vitest.json', './cypress/e2e/tsconfig.json'],
         tsconfigRootDir: __dirname,
       },
+      rules: {
+        'import/order': [
+          'error',
+          {
+            groups: [
+              ['builtin', 'external'],
+              'internal',
+              ['parent', 'sibling', 'index'],
+              'object',
+              'type',
+            ],
+            alphabetize: { order: 'asc' },
+            'newlines-between': 'always',
+          },
+        ],
+        'sort-imports': [
+          'error',
+          {
+            ignoreDeclarationSort: true, // Prevent conlict with rule 'import/order'
+          },
+        ],
+      },
     },
     {
       // Somehow we need to set parser of .vue file after extending recommended rules in

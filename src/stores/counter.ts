@@ -1,5 +1,5 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
 
 // eslint-disable-next-line import/prefer-default-export
 export const useCounterStore = defineStore('counter', () => {
