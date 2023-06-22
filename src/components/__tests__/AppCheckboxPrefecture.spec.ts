@@ -12,6 +12,7 @@ describe('AppCheckboxPrefecture', () => {
     }
 
     const wrapper = mount(AppCheckboxPrefecture, { props: prefecture })
+
     expect(wrapper.text()).toContain(prefecture.prefName)
   })
 })
