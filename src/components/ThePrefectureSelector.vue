@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
 import AppCheckboxPrefecture from './AppCheckboxPrefecture.vue'
+
 import type { Prefectures } from '../types/search-response'
+import type { PropType } from 'vue'
 
 defineProps({
   prefectures: {
