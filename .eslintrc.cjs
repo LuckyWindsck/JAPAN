@@ -1,6 +1,33 @@
 /* eslint-env node */
 require('@rushstack/eslint-patch/modern-module-resolution')
 
+const typescriptRules = {
+  '@typescript-eslint/consistent-type-imports': 'error',
+}
+
+const sortingRules = {
+  'import/order': [
+    'error',
+    {
+      groups: [
+        ['builtin', 'external'],
+        'internal',
+        ['parent', 'sibling', 'index'],
+        'object',
+        'type',
+      ],
+      alphabetize: { order: 'asc' },
+      'newlines-between': 'always',
+    },
+  ],
+  'sort-imports': [
+    'error',
+    {
+      ignoreDeclarationSort: true, // Prevent conlict with rule 'import/order'
+    },
+  ],
+}
+
 module.exports = {
   root: true,
   extends: [
@@ -46,26 +73,8 @@ module.exports = {
         tsconfigRootDir: __dirname,
       },
       rules: {
-        'import/order': [
-          'error',
-          {
-            groups: [
-              ['builtin', 'external'],
-              'internal',
-              ['parent', 'sibling', 'index'],
-              'object',
-              'type',
-            ],
-            alphabetize: { order: 'asc' },
-            'newlines-between': 'always',
-          },
-        ],
-        'sort-imports': [
-          'error',
-          {
-            ignoreDeclarationSort: true, // Prevent conlict with rule 'import/order'
-          },
-        ],
+        ...typescriptRules,
+        ...sortingRules,
       },
     },
     {
