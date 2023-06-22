@@ -1,5 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TheDataPresenter from '../components/TheDataPresenter.vue'
+import ThePrefectureSelector from '../components/ThePrefectureSelector.vue'
+</script>
 
 <template>
-  <main></main>
+  <main>
+    <TheDataPresenter />
+    <ThePrefectureSelector />
+  </main>
 </template>
