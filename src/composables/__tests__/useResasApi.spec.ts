@@ -9,6 +9,8 @@ const tokyo = {
   prefName: '東京都',
 }
 
+// We don't mock HTTP requests, since we want to test if the fetch composable really works.
+
 describe('useResasApi', () => {
   it('fetch prefectures data from RESAS API', async () => {
     const data = await fetch<Prefectures>('/api/v1/prefectures')
