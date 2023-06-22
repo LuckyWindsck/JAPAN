@@ -1,25 +1,21 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 import TheDataPresenter from '../components/TheDataPresenter.vue'
 import ThePrefectureSelector from '../components/ThePrefectureSelector.vue'
+import useResasApi from '../composables/useResasApi'
 
-const prefectures = [
-  {
-    prefCode: 11,
-    prefName: '埼玉県',
-  },
-  {
-    prefCode: 12,
-    prefName: '千葉県',
-  },
-  {
-    prefCode: 13,
-    prefName: '東京都',
-  },
-  {
-    prefCode: 14,
-    prefName: '神奈川県',
-  },
-]
+import type { Prefectures } from '@/types/search-response'
+
+const { fetch } = useResasApi
+
+const prefectures = ref<Prefectures>([])
+
+fetch<Prefectures>('/api/v1/prefectures')
+  .then((data) => {
+    prefectures.value = data.result
+  })
+  .catch(() => {})
 </script>
 
 <template>
