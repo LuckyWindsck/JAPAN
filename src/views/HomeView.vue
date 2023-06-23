@@ -20,7 +20,7 @@ fetch<Prefectures>('/api/v1/prefectures')
 
 <template>
   <main>
-    <TheDataPresenter />
-    <ThePrefectureSelector :prefectures="prefectures" />
+    <TheDataPresenter data-test-class="data-presenter" />
+    <ThePrefectureSelector :prefectures="prefectures" data-test-class="prefecture-selector" />
   </main>
 </template>
