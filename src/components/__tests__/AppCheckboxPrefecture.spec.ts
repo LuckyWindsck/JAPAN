@@ -9,6 +9,7 @@ describe('AppCheckboxPrefecture', () => {
     const prefecture = {
       prefCode: fakerJA.number.int({ min: 1, max: 47 }),
       prefName: fakerJA.location.state(),
+      isSelected: false,
     }
 
     const wrapper = mount(AppCheckboxPrefecture, { props: prefecture })

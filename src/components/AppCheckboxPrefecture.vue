@@ -8,12 +8,26 @@ defineProps({
     type: String,
     required: true,
   },
+  isSelected: {
+    type: Boolean,
+    required: true,
+  },
 })
+
+defineEmits<{
+  'update:is-selected': [newValue: boolean]
+}>()
 </script>
 
 <template>
   <div class="prefecture-checkbox">
-    <input :id="prefName" type="checkbox" name="prefecture" :value="prefCode" />
+    <input
+      :id="prefName"
+      type="checkbox"
+      name="prefecture"
+      :value="isSelected"
+      @change="$emit('update:is-selected', (<HTMLInputElement>$event.target).checked)"
+    />
     <label :for="prefName">{{ prefName }}</label>
   </div>
 </template>
