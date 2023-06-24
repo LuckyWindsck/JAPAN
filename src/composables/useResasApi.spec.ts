@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
-import useResasApi from '../useResasApi'
+import useResasApi from '@/composables/useResasApi'
 
-import type { PopulationCompositionData, PrefectureData } from '../../types/search-response'
+import type { PopulationCompositionData, PrefectureData } from '@/types/search-response'
 
 const { fetch } = useResasApi()
 

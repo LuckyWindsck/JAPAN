@@ -4,11 +4,10 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
+import ThePrefectureSelector from '@/components/ThePrefectureSelector.vue'
 import usePrefecturesStore from '@/stores/prefectures'
 
-import ThePrefectureSelector from '../ThePrefectureSelector.vue'
-
-import type { Prefecture } from '../../types/prefecture'
+import type { Prefecture } from '@/types/prefecture'
 
 const generateRandomPrefecture = (): Prefecture => ({
   prefCode: fakerJA.number.int({ min: 1, max: 47 }),
