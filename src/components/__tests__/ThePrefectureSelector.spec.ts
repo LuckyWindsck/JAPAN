@@ -9,7 +9,6 @@ import usePrefecturesStore from '@/stores/prefectures'
 import ThePrefectureSelector from '../ThePrefectureSelector.vue'
 
 import type { Prefecture } from '../../types/prefecture'
-import type { VueWrapper } from '@vue/test-utils'
 
 const generateRandomPrefecture = (): Prefecture => ({
   prefCode: fakerJA.number.int({ min: 1, max: 47 }),
@@ -20,9 +19,6 @@ const generateRandomPrefecture = (): Prefecture => ({
 
 const generateRandomPrefectures = (prefectureCount: number) =>
   Array.from({ length: prefectureCount }, generateRandomPrefecture)
-
-const findAllPrefectureCheckboxes = (wrapper: VueWrapper) =>
-  wrapper.findAll('[data-test-class="prefecture-checkbox"]')
 
 describe('ThePrefectureSelector', () => {
   it('renders correct number of prefecture checkboxes', async () => {
@@ -35,7 +31,7 @@ describe('ThePrefectureSelector', () => {
     const prefectureCount = fakerJA.number.int({ min: 1, max: 47 })
 
     // Initial state
-    let prefectureCheckboxes = findAllPrefectureCheckboxes(wrapper as VueWrapper)
+    let prefectureCheckboxes = wrapper.findAllByTestClass('prefecture-checkbox')
 
     expect(prefecturesStore.prefectures).toHaveLength(0)
     expect(prefectureCheckboxes).toHaveLength(0)
@@ -43,7 +39,7 @@ describe('ThePrefectureSelector', () => {
     // After update
     prefecturesStore.prefectures = generateRandomPrefectures(prefectureCount)
     await nextTick()
-    prefectureCheckboxes = findAllPrefectureCheckboxes(wrapper as VueWrapper)
+    prefectureCheckboxes = wrapper.findAllByTestClass('prefecture-checkbox')
 
     expect(prefecturesStore.prefectures).toHaveLength(prefectureCount)
     expect(prefectureCheckboxes).toHaveLength(prefectureCount)

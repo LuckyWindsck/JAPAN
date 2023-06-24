@@ -16,10 +16,10 @@ describe('HomeView', () => {
       },
     })
 
-    const dataPresenter = wrapper.findAll('[data-test-class="data-presenter"]')
+    const dataPresenter = wrapper.findAllByTestClass('data-presenter')
     expect(dataPresenter).toHaveLength(1)
 
-    const prefectureSelector = wrapper.findAll('[data-test-class="prefecture-selector"]')
+    const prefectureSelector = wrapper.findAllByTestClass('prefecture-selector')
     expect(prefectureSelector).toHaveLength(1)
   })
 })

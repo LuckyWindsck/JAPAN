@@ -18,7 +18,7 @@ describe('TheLineChart', () => {
         datasets: [],
       },
     })
-    const lintChart = wrapper.findAll('[data-test-class="line-chart"]')
+    const lintChart = wrapper.findAllByTestClass('line-chart')
 
     expect(lintChart).toHaveLength(1)
   })
