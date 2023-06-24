@@ -2,7 +2,7 @@ import { fakerJA } from '@faker-js/faker'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import AppCheckboxPrefecture from '../AppCheckboxPrefecture.vue'
+import AppCheckboxPrefecture from '@/components/AppCheckboxPrefecture.vue'
 
 describe('AppCheckboxPrefecture', () => {
   it('renders prefecture name', () => {

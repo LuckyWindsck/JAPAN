@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import usePrefecturesStore from '../prefectures'
+import usePrefecturesStore from '@/stores/prefectures'
 
 describe('Prefectures Store', () => {
   beforeEach(() => {

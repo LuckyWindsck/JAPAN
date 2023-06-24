@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-import type { Prefecture } from '../types/prefecture'
+import type { Prefecture } from '@/types/prefecture'
 
 const usePrefecturesStore = defineStore('prefectures', () => {
   const prefectures = ref<Prefecture[]>([])

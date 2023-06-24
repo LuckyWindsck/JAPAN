@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 
+import AppCheckboxPrefecture from '@/components/AppCheckboxPrefecture.vue'
 import usePrefecturesStore from '@/stores/prefectures'
-
-import AppCheckboxPrefecture from './AppCheckboxPrefecture.vue'
 
 const prefecturesStore = usePrefecturesStore()
 const { prefectures } = storeToRefs(prefecturesStore)

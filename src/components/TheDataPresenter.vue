@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TheLineChart from './TheLineChart.vue'
+import TheLineChart from '@/components/TheLineChart.vue'
 
 const [start, end, step] = [1960, 2045, 5]
 const lineCount = 3

@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import TheLineChart from '../TheLineChart.vue'
+import TheLineChart from '@/components/TheLineChart.vue'
 
 // Q1: Why there is no test for how line chart render data?
 // A1: Since we shouldn't check its implementation, we can only check if there is an element which
