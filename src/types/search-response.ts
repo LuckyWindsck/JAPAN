@@ -1,10 +1,3 @@
-type Prefecture = {
-  prefCode: number
-  prefName: string
-}
-
-export type Prefectures = Prefecture[]
-
 type PopulationInTotal = {
   label: '総人口'
   data: {
@@ -22,7 +15,12 @@ type PopulationByAge = {
   }[]
 }
 
-export interface PopulationComposition {
+export type PrefectureData = {
+  prefCode: number
+  prefName: string
+}
+
+export type PopulationCompositionData = {
   boundaryYear: number
   data: (PopulationInTotal | PopulationByAge)[]
 }
