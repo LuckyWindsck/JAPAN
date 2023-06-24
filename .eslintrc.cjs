@@ -28,6 +28,23 @@ const sortingRules = {
   ],
 }
 
+const importRules = {
+  'import/no-extraneous-dependencies': [
+    'error',
+    {
+      devDependencies: [
+        '**/*.spec.ts',
+        './vite.config.ts',
+        './vitest.config.ts',
+        './cypress.config.ts',
+        './src/configs/vitest/setup.ts', // Refer to vitest.config.test.setupFiles
+        './src/plugins/test-utils/**',
+      ],
+      optionalDependencies: false,
+    },
+  ],
+}
+
 module.exports = {
   root: true,
   extends: [
@@ -75,6 +92,7 @@ module.exports = {
       rules: {
         ...typescriptRules,
         ...sortingRules,
+        ...importRules,
       },
     },
     {
