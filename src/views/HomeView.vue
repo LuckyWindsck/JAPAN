@@ -5,13 +5,13 @@ import TheDataPresenter from '../components/TheDataPresenter.vue'
 import ThePrefectureSelector from '../components/ThePrefectureSelector.vue'
 import useResasApi from '../composables/useResasApi'
 
-import type { Prefectures } from '@/types/search-response'
+import type { PrefectureData } from '@/types/search-response'
 
-const { fetch } = useResasApi
+const { fetch } = useResasApi()
 
-const prefectures = ref<Prefectures>([])
+const prefectures = ref<PrefectureData[]>([])
 
-fetch<Prefectures>('/api/v1/prefectures')
+fetch<PrefectureData[]>('/api/v1/prefectures')
   .then((data) => {
     prefectures.value = data.result
   })

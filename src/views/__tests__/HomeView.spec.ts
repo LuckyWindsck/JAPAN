@@ -1,15 +1,25 @@
+import { createTestingPinia } from '@pinia/testing'
 import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import HomeView from '../HomeView.vue'
 
 describe('HomeView', () => {
   it('renders data presenter and prefecture selector', () => {
-    const wrapper = mount(HomeView)
-    const dataPresenter = wrapper.find('[data-test-class="data-presenter"]')
-    const prefectureSelector = wrapper.find('[data-test-class="prefecture-selector"]')
+    // We need to stub ThePrefectureSelectore in order to pass the test. To do that, we can make a
+    // default stub. Moreever, we think that we can shallow mount the whole HomeView view component.
+    // So we set { shallow: true } for this mounting.
+    const wrapper = mount(HomeView, {
+      shallow: true,
+      global: {
+        plugins: [createTestingPinia({ createSpy: vi.fn })],
+      },
+    })
 
-    expect(dataPresenter.exists()).toBe(true)
-    expect(prefectureSelector.exists()).toBe(true)
+    const dataPresenter = wrapper.findAll('[data-test-class="data-presenter"]')
+    expect(dataPresenter).toHaveLength(1)
+
+    const prefectureSelector = wrapper.findAll('[data-test-class="prefecture-selector"]')
+    expect(prefectureSelector).toHaveLength(1)
   })
 })

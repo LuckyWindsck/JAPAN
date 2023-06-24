@@ -11,6 +11,6 @@ const fetch = async <T>(path: string) => {
   return response.data
 }
 
-const useResasApi = { fetch }
+const useResasApi = () => ({ fetch })
 
 export default useResasApi
