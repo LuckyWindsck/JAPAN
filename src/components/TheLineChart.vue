@@ -65,12 +65,18 @@ const chartData = computed<ChartData<TType, TData, TLabel>>(() => ({
   datasets: props.datasets,
 }))
 
-const chartOptions = ref<ChartOptions<TType>>({})
+const chartOptions = ref<ChartOptions<TType>>({
+  plugins: {
+    colors: {
+      forceOverride: true,
+    },
+  },
+})
 </script>
 
 <template>
   <div class="line-chart-container">
-    <Line :data="chartData" :option="chartOptions" data-test-class="line-chart" />
+    <Line :data="chartData" :options="chartOptions" data-test-class="line-chart" />
   </div>
 </template>
 
