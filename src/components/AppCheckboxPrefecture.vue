@@ -17,7 +17,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  'update:is-selected': [newValue: boolean]
+  'update:isSelected': [newValue: boolean]
 }>()
 
 const isSelectedModel = useVModel(props, 'isSelected', emit)
