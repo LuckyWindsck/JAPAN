@@ -2,7 +2,12 @@ import { createTestingPinia } from '@pinia/testing'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 
+import useResasApi from '@/composables/useResasApi'
 import HomeView from '@/views/HomeView.vue'
+
+vi.mock('@/composables/useResasApi', () => ({
+  default: vi.fn(() => ({ isLoading: vi.fn })),
+}))
 
 describe('HomeView', () => {
   it('renders data presenter and prefecture selector', () => {
@@ -15,6 +20,8 @@ describe('HomeView', () => {
         plugins: [createTestingPinia({ createSpy: vi.fn })],
       },
     })
+
+    expect(useResasApi).toHaveBeenCalledTimes(1)
 
     const dataPresenter = wrapper.findAllByTestClass('data-presenter')
     expect(dataPresenter).toHaveLength(1)
