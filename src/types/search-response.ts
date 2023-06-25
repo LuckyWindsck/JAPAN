@@ -1,4 +1,4 @@
-type PopulationInTotal = {
+export type PopulationInTotal = {
   label: '総人口'
   data: {
     year: number
@@ -6,7 +6,7 @@ type PopulationInTotal = {
   }[]
 }
 
-type PopulationByAge = {
+export type PopulationByAge = {
   label: '年少人口' | '生産年齢人口' | '老年人口'
   data: {
     year: number
