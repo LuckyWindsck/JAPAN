@@ -1,21 +1,13 @@
-import { fakerJA } from '@faker-js/faker'
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import usePrefecturesStore from '@/stores/prefectures'
+import { integerFactory, prefectureCountInJapan } from '@/utils/test/factories/faker'
+import prefecturesFactory from '@/utils/test/factories/prefectures'
+import { shuffle } from '@/utils/test/helpers/faker'
 
-import type { Prefecture } from '@/types/prefecture'
-
-const prefectureCountInJapan = 47
-const randomSelectedPrefectureCount = fakerJA.number.int({ min: 1, max: prefectureCountInJapan })
-const nonSelectedPrefectureCount = prefectureCountInJapan - randomSelectedPrefectureCount
-
-const generateRandomPrefectureWithOption = (isSelected: boolean): Prefecture => ({
-  prefCode: fakerJA.number.int({ min: 1, max: prefectureCountInJapan }),
-  prefName: fakerJA.location.state(),
-  populationComposition: null,
-  isSelected,
-})
+const selectedPrefectureCount = integerFactory({ max: prefectureCountInJapan })
+const nonSelectedPrefectureCount = prefectureCountInJapan - selectedPrefectureCount
 
 describe('Prefectures Store', () => {
   beforeEach(() => {
@@ -31,19 +23,14 @@ describe('Prefectures Store', () => {
   it('filters selected and non-selected prefectures', () => {
     const prefecturesStore = usePrefecturesStore()
 
-    const selectedPrefectures = Array.from({ length: randomSelectedPrefectureCount }, () =>
-      generateRandomPrefectureWithOption(true),
-    )
-    const nonSelectedPrefectures = Array.from({ length: nonSelectedPrefectureCount }, () =>
-      generateRandomPrefectureWithOption(false),
-    )
-    prefecturesStore.prefectures = fakerJA.helpers.shuffle([
-      ...selectedPrefectures,
-      ...nonSelectedPrefectures,
-    ])
+    const selectedPrefectures = prefecturesFactory(selectedPrefectureCount, { isSelected: true })
+    const nonSelectedPrefectures = prefecturesFactory(nonSelectedPrefectureCount, {
+      isSelected: false,
+    })
+    prefecturesStore.prefectures = shuffle([...selectedPrefectures, ...nonSelectedPrefectures])
 
     expect(prefecturesStore.prefectures).toHaveLength(prefectureCountInJapan)
-    expect(prefecturesStore.selectedPrefectures).toHaveLength(randomSelectedPrefectureCount)
+    expect(prefecturesStore.selectedPrefectures).toHaveLength(selectedPrefectureCount)
     expect(prefecturesStore.nonSelectedPrefectures).toHaveLength(nonSelectedPrefectureCount)
   })
 })

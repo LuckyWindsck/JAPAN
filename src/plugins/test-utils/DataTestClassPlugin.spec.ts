@@ -1,13 +1,13 @@
-import { faker } from '@faker-js/faker'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { defineComponent } from 'vue'
 
 import DataTestClassPlugin from '@/plugins/test-utils/DataTestClassPlugin'
+import { integerFactory, testClassFactory } from '@/utils/test/factories/faker'
 
-const randomTestClass = faker.string.nanoid()
-const randomElementCount = faker.number.int({ max: 10 })
-const template = `<div data-test-class="${randomTestClass}" />`.repeat(randomElementCount)
+const testClass = testClassFactory()
+const elementCount = integerFactory({ min: 1, max: 10 })
+const template = `<div data-test-class="${testClass}" />`.repeat(elementCount)
 const TestComponent = defineComponent({ template })
 
 describe('DataTestClassPlugin', () => {
@@ -15,6 +15,6 @@ describe('DataTestClassPlugin', () => {
     const wrapper = mount(TestComponent)
     const { findAllByTestClass } = DataTestClassPlugin(wrapper)
 
-    expect(findAllByTestClass(randomTestClass)).toHaveLength(randomElementCount)
+    expect(findAllByTestClass(testClass)).toHaveLength(elementCount)
   })
 })

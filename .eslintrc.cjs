@@ -39,6 +39,7 @@ const importRules = {
         './cypress.config.ts',
         './src/configs/vitest/setup.ts', // Refer to vitest.config.test.setupFiles
         './src/plugins/test-utils/**',
+        './src/utils/test/**',
       ],
       optionalDependencies: false,
     },

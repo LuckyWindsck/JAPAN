@@ -2,13 +2,9 @@
 import { describe, expect, it } from 'vitest'
 
 import useResasApi from '@/composables/useResasApi'
+import { tokyo } from '@/utils/test/fixtures/prefectures'
 
 import type { PopulationCompositionData, PrefectureData } from '@/types/search-response'
-
-const tokyo = {
-  prefCode: 13,
-  prefName: '東京都',
-}
 
 // We don't mock HTTP requests, since we want to test if the fetch composable really works.
 
