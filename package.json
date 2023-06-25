@@ -23,6 +23,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@vueuse/integrations": "^10.2.0",
     "axios": "^1.4.0",
     "chart.js": "^4.3.0",
     "pinia": "^2.1.3",
