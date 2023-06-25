@@ -62,7 +62,7 @@ module.exports = {
       //
       // Source: https://github.com/iamturns/eslint-config-airbnb-typescript#i-wish-this-config-would-support-
       // > For additional functionality, alter your ESLint config file.
-      files: ['*.ts', '*.tsx', '*.vue'],
+      files: ['*.ts', '*.vue'],
       extends: [
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
@@ -105,7 +105,7 @@ module.exports = {
       parser: require.resolve('vue-eslint-parser'),
     },
     {
-      files: ['cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'],
+      files: ['cypress/e2e/**/*.cy.ts'],
       extends: ['plugin:cypress/recommended'],
     },
   ],
