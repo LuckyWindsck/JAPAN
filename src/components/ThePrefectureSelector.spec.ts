@@ -16,9 +16,6 @@ const generateRandomPrefecture = (): Prefecture => ({
   isSelected: false,
 })
 
-const generateRandomPrefectures = (prefectureCount: number) =>
-  Array.from({ length: prefectureCount }, generateRandomPrefecture)
-
 describe('ThePrefectureSelector', () => {
   it('renders correct number of prefecture checkboxes', async () => {
     const wrapper = mount(ThePrefectureSelector, {
@@ -36,7 +33,7 @@ describe('ThePrefectureSelector', () => {
     expect(prefectureCheckboxes).toHaveLength(0)
 
     // After update
-    prefecturesStore.prefectures = generateRandomPrefectures(prefectureCount)
+    prefecturesStore.prefectures = Array.from({ length: prefectureCount }, generateRandomPrefecture)
     await nextTick()
     prefectureCheckboxes = wrapper.findAllByTestClass('prefecture-checkbox')
 

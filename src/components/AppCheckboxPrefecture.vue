@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineProps({
+import { useVModel } from '@vueuse/core'
+
+const props = defineProps({
   prefCode: {
     type: Number,
     required: true,
@@ -14,20 +16,16 @@ defineProps({
   },
 })
 
-defineEmits<{
+const emit = defineEmits<{
   'update:is-selected': [newValue: boolean]
 }>()
+
+const isSelectedModel = useVModel(props, 'isSelected', emit)
 </script>
 
 <template>
   <div class="prefecture-checkbox">
-    <input
-      :id="prefName"
-      type="checkbox"
-      name="prefecture"
-      :value="isSelected"
-      @change="$emit('update:is-selected', (<HTMLInputElement>$event.target).checked)"
-    />
+    <input :id="prefName" v-model="isSelectedModel" type="checkbox" name="prefecture" />
     <label :for="prefName">{{ prefName }}</label>
   </div>
 </template>
