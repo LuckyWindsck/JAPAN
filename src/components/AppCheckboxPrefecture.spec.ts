@@ -1,16 +1,12 @@
-import { fakerJA } from '@faker-js/faker'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
 import AppCheckboxPrefecture from '@/components/AppCheckboxPrefecture.vue'
+import prefactureFactory from '@/utils/test/factories/prefecture'
 
 describe('AppCheckboxPrefecture', () => {
   it('renders prefecture name', () => {
-    const prefecture = {
-      prefCode: fakerJA.number.int({ min: 1, max: 47 }),
-      prefName: fakerJA.location.state(),
-      isSelected: false,
-    }
+    const prefecture = prefactureFactory()
 
     const wrapper = mount(AppCheckboxPrefecture, { props: prefecture })
 

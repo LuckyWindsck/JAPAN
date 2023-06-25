@@ -1,4 +1,3 @@
-import { fakerJA } from '@faker-js/faker'
 import { createTestingPinia } from '@pinia/testing'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
@@ -7,27 +6,17 @@ import { nextTick, ref } from 'vue'
 import ThePrefectureSelector from '@/components/ThePrefectureSelector.vue'
 import useResasApi from '@/composables/useResasApi'
 import usePrefecturesStore from '@/stores/prefectures'
+import { integerFactory, prefectureCountInJapan } from '@/utils/test/factories/faker'
+import prefecturesFactory from '@/utils/test/factories/prefectures'
+import { tokyo } from '@/utils/test/fixtures/prefectures'
 
-import type { Prefecture } from '@/types/prefecture'
-
-const generateRandomPrefecture = (): Prefecture => ({
-  prefCode: fakerJA.number.int({ min: 1, max: 47 }),
-  prefName: fakerJA.location.state(),
-  populationComposition: null,
-  isSelected: false,
-})
-
-const tokyo = {
-  prefCode: 13,
-  prefName: '東京都',
-  populationComposition: null,
-  isSelected: false,
-}
+tokyo.populationComposition = null
+tokyo.isSelected = false
 
 vi.mock('@/composables/useResasApi', () => ({
   default: vi.fn(() => ({
     isLoading: vi.fn,
-    data: ref(1),
+    data: ref(),
   })),
 }))
 
@@ -39,7 +28,7 @@ describe('ThePrefectureSelector', () => {
       },
     })
     const prefecturesStore = usePrefecturesStore()
-    const prefectureCount = fakerJA.number.int({ min: 1, max: 47 })
+    const prefectureCount = integerFactory({ min: 1, max: prefectureCountInJapan })
 
     // Initial state
     let prefectureCheckboxes = wrapper.findAllByTestClass('prefecture-checkbox')
@@ -48,7 +37,7 @@ describe('ThePrefectureSelector', () => {
     expect(prefectureCheckboxes).toHaveLength(0)
 
     // After update
-    prefecturesStore.prefectures = Array.from({ length: prefectureCount }, generateRandomPrefecture)
+    prefecturesStore.prefectures = prefecturesFactory(prefectureCount)
     await nextTick()
     prefectureCheckboxes = wrapper.findAllByTestClass('prefecture-checkbox')
 
