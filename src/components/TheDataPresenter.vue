@@ -1,21 +1,70 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+
 import TheLineChart from '@/components/TheLineChart.vue'
+import usePrefecturesStore from '@/stores/prefectures'
 
-const [start, end, step] = [1960, 2045, 5]
-const lineCount = 3
+import type { Prefecture } from '@/types/prefecture'
+import type { PopulationInTotal } from '@/types/search-response'
 
-const yearCount = (end - start) / 5 + 1
-const years = Array.from({ length: yearCount }, (_, idx) => start + step * idx)
+type NonNullablePopulationComposition = {
+  populationComposition: NonNullable<Prefecture['populationComposition']>
+}
 
-const labels = years.map(String)
-const datasets = Array.from({ length: lineCount }, (_, i) => i + 1).map((idx) => ({
-  label: `東京都-${idx}`,
-  data: Array.from({ length: yearCount }, () => 10 ** 7 * (0.75 + Math.random() / 2)),
-}))
+const prefecturesStore = usePrefecturesStore()
+const { selectedPrefectures } = storeToRefs(prefecturesStore)
+
+const displayedPrefectures = computed(() =>
+  selectedPrefectures.value.filter(
+    (prefecture): prefecture is Prefecture & NonNullablePopulationComposition =>
+      prefecture.populationComposition !== null,
+  ),
+)
+
+const labels = computed(() => {
+  if (displayedPrefectures.value.length === 0) return []
+
+  const { populationComposition } = displayedPrefectures.value[0]
+  const found = populationComposition.data.find(({ label }) => label === '総人口')
+  if (found === undefined) throw Error('RESAS API return incorrect data')
+
+  const populationInTotal = found as PopulationInTotal
+
+  return populationInTotal.data.map(({ year }) => String(year))
+})
+
+const datasets = computed(() =>
+  displayedPrefectures.value.flatMap((prefecture) => {
+    const { populationComposition } = prefecture
+    const found = populationComposition.data.find(({ label }) => label === '総人口')
+    if (found === undefined) throw Error('RESAS API return incorrect data')
+
+    const populationInTotal = found as PopulationInTotal
+
+    return [
+      {
+        label: prefecture.prefName,
+        data: populationInTotal.data.map(({ value }) => value),
+      },
+    ]
+  }),
+)
 </script>
 
 <template>
-  <TheLineChart :labels="labels" :datasets="datasets" />
+  <div class="the-data-presenter">
+    <TheLineChart
+      :labels="labels"
+      :datasets="datasets"
+      data-test-class="population-transition-line-chart"
+    />
+  </div>
 </template>
 
-<!-- <style scoped></style> -->
+<style scoped>
+.the-data-presenter {
+  display: flex;
+  justify-content: center;
+}
+</style>

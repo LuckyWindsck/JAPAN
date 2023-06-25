@@ -119,7 +119,7 @@ describe('TheDataPresenter', () => {
 
     const lineChartProps = wrapper.findComponent(TheLineChart).props() as LineChartPropsType
     const lineChartLabel = lineChartProps.labels as A2A<TLabel>
-    const lineChartData = (lineChartProps.datasets as A2A<TDatasets>).map(({ data }) => data)
+    const lineChartData = (lineChartProps.datasets as A2A<TDatasets>).map(({ data }) => data)[0]
 
     expect(lineChartLabel).toEqual(expect.arrayContaining(expectedLabels))
     expect(expectedLabels).toEqual(expect.arrayContaining(lineChartLabel))

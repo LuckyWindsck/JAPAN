@@ -30,3 +30,5 @@ watch(isLoading, () => {
     <ThePrefectureSelector data-test-class="prefecture-selector" />
   </main>
 </template>
+
+<!-- <style scoped></style> -->
