@@ -1,7 +1,7 @@
 import { createTestingPinia } from '@pinia/testing'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
-import { nextTick, ref } from 'vue'
+import { nextTick } from 'vue'
 
 import ThePrefectureSelector from '@/components/ThePrefectureSelector.vue'
 import useResasApi from '@/composables/useResasApi'
@@ -11,12 +11,7 @@ import prefactureFactory from '@/utils/test/factories/prefecture'
 import prefecturesFactory from '@/utils/test/factories/prefectures'
 import { nonNullPopulationComposition } from '@/utils/test/fixtures/prefectures'
 
-vi.mock('@/composables/useResasApi', () => ({
-  default: vi.fn<never, Partial<ReturnType<typeof useResasApi>>>(() => ({
-    isLoading: ref(true),
-    data: ref(),
-  })),
-}))
+vi.mock('@/composables/useResasApi', () => ({ default: vi.fn() }))
 
 describe.concurrent('ThePrefectureSelector', () => {
   it('renders correct number of prefecture checkboxes', async () => {

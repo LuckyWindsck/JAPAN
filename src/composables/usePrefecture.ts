@@ -1,6 +1,4 @@
 /* eslint-disable no-param-reassign */
-import { watch } from 'vue'
-
 import useResasApi from './useResasApi'
 
 import type { Prefecture } from '@/types/prefecture'
@@ -9,13 +7,11 @@ import type { PopulationCompositionData } from '@/types/search-response'
 const usePrefecture = (prefecture: Prefecture) => {
   const fetchPopulationComposition = () => {
     const path = `/api/v1/population/composition/perYear?prefCode=${prefecture.prefCode}`
-    const { data, error, isLoading } = useResasApi<PopulationCompositionData>(path)
 
-    watch(isLoading, () => {
-      if (error.value instanceof Error) throw error.value
-      if (data.value === undefined) return
-
-      prefecture.populationComposition = data.value.result
+    return useResasApi<PopulationCompositionData>(path, {
+      onSuccess(data) {
+        prefecture.populationComposition = data.result
+      },
     })
   }
 
@@ -29,8 +25,10 @@ const usePrefecture = (prefecture: Prefecture) => {
     prefecture.isSelected = newValue
 
     if (prefecture.isSelected && prefecture.populationComposition === null) {
-      fetchPopulationComposition()
+      return fetchPopulationComposition()
     }
+
+    return undefined
   }
 
   return {

@@ -3,18 +3,6 @@ import { describe, expect, it } from 'vitest'
 import usePrefecture from '@/composables/usePrefecture'
 import prefactureFactory from '@/utils/test/factories/prefecture'
 import { nonNullPopulationComposition } from '@/utils/test/fixtures/prefectures'
-import { sleep } from '@/utils/test/helpers/sleep'
-
-import type { Second } from '@/utils/test/helpers/sleep'
-
-// Q1: Why do we actually wait for the HTTP Request?
-// A1: Since we couldn't find a better solution, we have to actually wait for the expected outcome.
-//     In the case of using `vitest`, it appears that there is no direct way to access the data
-//     returned by a mocked function. Therefore, even if we mock `useResasApi`, we are unable to
-//     modify the values of its returned refs. As a result, testing anything that occurs after
-//     calling `useResasApi`, such as verifying whether the population composition data is
-//     successfully saved to the prefecture after data fetching, becomes quite challenging.
-const wait: Second = 3
 
 describe.concurrent('usePrefecture', () => {
   it('fetch prefecture composition', async () => {
@@ -24,8 +12,7 @@ describe.concurrent('usePrefecture', () => {
     })
     const { fetchPopulationComposition } = usePrefecture(prefecture)
 
-    fetchPopulationComposition()
-    await sleep(wait)
+    await fetchPopulationComposition()
 
     expect(prefecture.populationComposition).not.toBeNull()
   })
@@ -38,12 +25,11 @@ describe.concurrent('usePrefecture', () => {
       const prefecture4 = prefactureFactory({ isSelected: true })
 
       // Update with same value
-      usePrefecture(prefecture1).updateIsSelected(false)
-      usePrefecture(prefecture2).updateIsSelected(true)
+      await usePrefecture(prefecture1).updateIsSelected(false)
+      await usePrefecture(prefecture2).updateIsSelected(true)
       // Update with different value
-      usePrefecture(prefecture3).updateIsSelected(true)
-      usePrefecture(prefecture4).updateIsSelected(false)
-      await sleep(wait)
+      await usePrefecture(prefecture3).updateIsSelected(true)
+      await usePrefecture(prefecture4).updateIsSelected(false)
 
       expect(prefecture1.isSelected).toBe(false)
       expect(prefecture2.isSelected).toBe(true)
@@ -58,8 +44,7 @@ describe.concurrent('usePrefecture', () => {
       })
       const { updateIsSelected } = usePrefecture(prefecture)
 
-      updateIsSelected(true)
-      await sleep(wait)
+      await updateIsSelected(true)
 
       expect(prefecture.populationComposition).not.toBeNull()
     })
@@ -79,11 +64,10 @@ describe.concurrent('usePrefecture', () => {
       })
 
       // Update the `isSelected` property of a prefecture that owns population composition data to `true`.
-      usePrefecture(prefecture1).updateIsSelected(true)
+      await usePrefecture(prefecture1).updateIsSelected(true)
       // Update the `isSelected` property of a selected prefecture to `false`.
-      usePrefecture(prefecture2).updateIsSelected(false)
-      usePrefecture(prefecture3).updateIsSelected(false)
-      await sleep(wait)
+      await usePrefecture(prefecture2).updateIsSelected(false)
+      await usePrefecture(prefecture3).updateIsSelected(false)
 
       expect(prefecture1.populationComposition).toBe(nonNullPopulationComposition)
       expect(prefecture2.populationComposition).toBe(null)
