@@ -12,7 +12,7 @@ vi.mock('@/composables/useResasApi', () => ({
   })),
 }))
 
-describe('HomeView', () => {
+describe.concurrent('HomeView', () => {
   it('renders data presenter and prefecture selector', () => {
     // We need to stub ThePrefectureSelectore in order to pass the test. To do that, we can make a
     // default stub. Moreever, we think that we can shallow mount the whole HomeView view component.

@@ -25,7 +25,7 @@ vi.mock('@/composables/useResasApi', () => ({
   })),
 }))
 
-describe('ThePrefectureSelector', () => {
+describe.concurrent('ThePrefectureSelector', () => {
   it('renders correct number of prefecture checkboxes', async () => {
     const wrapper = mount(ThePrefectureSelector, {
       global: {

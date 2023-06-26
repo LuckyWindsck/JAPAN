@@ -9,7 +9,7 @@ import TheLineChart from '@/components/TheLineChart.vue'
 //     should use a visual regression test, but that is not the responsibility for this component
 //     test.
 
-describe('TheLineChart', () => {
+describe.concurrent('TheLineChart', () => {
   it('renders a line chart', () => {
     const wrapper = mount(TheLineChart, {
       shallow: true,
