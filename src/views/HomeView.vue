@@ -21,6 +21,8 @@ watch(isLoading, () => {
     populationComposition: null,
     isSelected: false,
   }))
+
+  prefecturesStore.selectDefaultPrefecture()
 })
 </script>
 
