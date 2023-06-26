@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from 'vitest'
 import TheDataPresenter from '@/components/TheDataPresenter.vue'
 import TheLineChart from '@/components/TheLineChart.vue'
 import { hokkaido, kyoto, okinawa, tokyo } from '@/utils/test/fixtures/prefectures'
+import assertions from '@/utils/test/helpers/assertions'
 
 import type { A2A, ArrayElement, ComponentProps } from '@/types/utility'
 
@@ -45,17 +46,15 @@ describe.concurrent('TheDataPresenter', () => {
       },
     })
 
-    const expectedLabels = ['1960', '1965', '1970'] as TLabel
-    const expectedData = [9683802, 10869244, 11408071] as TData
+    // Data from prefecture tokyo
+    const expectedLabels: TLabel = ['1960', '1965', '1970']
+    const expectedData: TData = [9683802, 10869244, 11408071]
 
     const lineChartProps = wrapper.findComponent(TheLineChart).props()
     const lineChartLabel = lineChartProps.labels as TLabel
     const lineChartData = (lineChartProps.datasets as TDatasets).map(({ data }) => data)[0]
 
-    expect(lineChartLabel).toEqual(expect.arrayContaining(expectedLabels))
-    expect(expectedLabels).toEqual(expect.arrayContaining(lineChartLabel))
-
-    expect(lineChartData).toEqual(expect.arrayContaining(expectedData))
-    expect(expectedData).toEqual(expect.arrayContaining(lineChartData))
+    assertions.arrayWithExactContents(expectedLabels, lineChartLabel)
+    assertions.arrayWithExactContents(expectedData, lineChartData)
   })
 })
