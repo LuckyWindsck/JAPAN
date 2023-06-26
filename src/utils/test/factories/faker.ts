@@ -1,6 +1,6 @@
 import { faker, fakerJA } from '@faker-js/faker'
 
-export const prefectureCountInJapan = 47
+export const prefectureCountInJapan = fakerJA.definitions.location.state.length
 
 export const integerFactory = ({ min = 0, max = Number.MAX_SAFE_INTEGER } = {}) =>
   faker.number.int({ min, max })
