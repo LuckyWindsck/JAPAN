@@ -17,7 +17,7 @@ useResasApi<PrefectureData[]>('/api/v1/prefectures', {
       isSelected: false,
     }))
 
-    prefecturesStore.selectDefaultPrefecture()
+    return prefecturesStore.selectDefaultPrefecture()
   },
 })
 </script>

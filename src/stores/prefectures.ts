@@ -21,15 +21,16 @@ const usePrefecturesStore = defineStore('prefectures', () => {
   // Actions
   const selectPrefecture = (selectPrefName: Prefecture['prefName']) => {
     const found = prefectures.value.find(({ prefName }) => prefName === selectPrefName)
-    if (found === undefined) return
+    if (found === undefined) return undefined
 
     const prefecture = found
     const { updateIsSelected } = usePrefecture(prefecture)
-    updateIsSelected(true)
+
+    return updateIsSelected(true)
   }
 
   const selectDefaultPrefecture = () => {
-    selectPrefecture(defaultPrefecture.value)
+    return selectPrefecture(defaultPrefecture.value)
   }
 
   return {
