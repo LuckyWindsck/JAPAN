@@ -7,16 +7,9 @@ import ThePrefectureSelector from '@/components/ThePrefectureSelector.vue'
 import useResasApi from '@/composables/useResasApi'
 import usePrefecturesStore from '@/stores/prefectures'
 import { integerFactory, prefectureCountInJapan } from '@/utils/test/factories/faker'
+import prefactureFactory from '@/utils/test/factories/prefecture'
 import prefecturesFactory from '@/utils/test/factories/prefectures'
-import {
-  hokkaido,
-  kyoto,
-  nonNullPopulationComposition,
-  okinawa,
-  tokyo,
-} from '@/utils/test/fixtures/prefectures'
-
-const prefectures = [hokkaido, kyoto, okinawa, tokyo]
+import { nonNullPopulationComposition } from '@/utils/test/fixtures/prefectures'
 
 vi.mock('@/composables/useResasApi', () => ({
   default: vi.fn<never, Partial<ReturnType<typeof useResasApi>>>(() => ({
@@ -67,7 +60,14 @@ describe.concurrent('ThePrefectureSelector', () => {
           createTestingPinia({
             createSpy: vi.fn,
             initialState: {
-              prefectures: { prefectures },
+              prefectures: {
+                prefectures: [
+                  prefactureFactory({
+                    populationComposition: null,
+                    isSelected: false,
+                  }),
+                ],
+              },
             },
           }),
         ],
@@ -75,10 +75,10 @@ describe.concurrent('ThePrefectureSelector', () => {
     })
     const prefecturesStore = usePrefecturesStore()
     const prefectureCheckboxes = wrapper.findAllByTestClass('prefecture-checkbox')
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- This must exist, because that is how we set the initial state.
     const prefectureFound = prefecturesStore.prefectures.find(
       (prefecture) => !prefecture.isSelected && prefecture.populationComposition === null,
-    )
-    if (prefectureFound === undefined) throw Error('There is no appropriate fixture for test.')
+    )!
     const testPrefectureName = prefectureFound.prefName
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- It's tested in the 'Check for label text rendering' part of test 'renders correct number of prefecture checkboxes'
