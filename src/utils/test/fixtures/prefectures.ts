@@ -1,5 +1,7 @@
 import type { Prefecture } from '@/types/prefecture'
 
+export const nonNullPopulationComposition = { boundaryYear: 1, data: [] }
+
 // not selected & no population composition data
 export const hokkaido: Prefecture = {
   prefCode: 1,
