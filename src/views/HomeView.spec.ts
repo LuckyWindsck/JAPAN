@@ -1,16 +1,11 @@
 import { createTestingPinia } from '@pinia/testing'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
-import { ref } from 'vue'
 
 import useResasApi from '@/composables/useResasApi'
 import HomeView from '@/views/HomeView.vue'
 
-vi.mock('@/composables/useResasApi', () => ({
-  default: vi.fn<never, Partial<ReturnType<typeof useResasApi>>>(() => ({
-    isLoading: ref(true),
-  })),
-}))
+vi.mock('@/composables/useResasApi', () => ({ default: vi.fn() }))
 
 describe.concurrent('HomeView', () => {
   it('renders data presenter and prefecture selector', () => {

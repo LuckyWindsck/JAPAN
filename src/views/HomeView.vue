@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { watch } from 'vue'
-
 import TheDataPresenter from '@/components/TheDataPresenter.vue'
 import ThePrefectureSelector from '@/components/ThePrefectureSelector.vue'
 import useResasApi from '@/composables/useResasApi'
@@ -10,19 +8,17 @@ import type { PrefectureData } from '@/types/search-response'
 
 const prefecturesStore = usePrefecturesStore()
 
-const { data, error, isLoading } = useResasApi<PrefectureData[]>('/api/v1/prefectures')
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+useResasApi<PrefectureData[]>('/api/v1/prefectures', {
+  onSuccess(data) {
+    prefecturesStore.prefectures = data.result.map((prefectureData) => ({
+      ...prefectureData,
+      populationComposition: null,
+      isSelected: false,
+    }))
 
-watch(isLoading, () => {
-  if (error.value instanceof Error) throw error.value
-  if (data.value === undefined) return
-
-  prefecturesStore.prefectures = data.value.result.map((prefectureData) => ({
-    ...prefectureData,
-    populationComposition: null,
-    isSelected: false,
-  }))
-
-  prefecturesStore.selectDefaultPrefecture()
+    prefecturesStore.selectDefaultPrefecture()
+  },
 })
 </script>
 
