@@ -6,12 +6,6 @@ import { integerFactory, prefectureCountInJapan } from '@/utils/test/factories/f
 import prefecturesFactory from '@/utils/test/factories/prefectures'
 import { tokyo } from '@/utils/test/fixtures/prefectures'
 import { shuffle } from '@/utils/test/helpers/faker'
-import { sleep } from '@/utils/test/helpers/sleep'
-
-import type { Second } from '@/utils/test/helpers/sleep'
-
-// The reason for waiting is stated in `usePrefecture.spec.ts`
-const wait: Second = 3
 
 describe.concurrent('Prefectures Store', () => {
   beforeEach(() => {
@@ -57,8 +51,7 @@ describe.concurrent('Prefectures Store', () => {
     prefecturesStore.prefectures = prefectures
     const prefecture = prefectures[randomIndex]
 
-    prefecturesStore.selectPrefecture(prefecture.prefName)
-    await sleep(wait)
+    await prefecturesStore.selectPrefecture(prefecture.prefName)
 
     expect(prefecture.isSelected).toBeTruthy()
   })
@@ -67,8 +60,7 @@ describe.concurrent('Prefectures Store', () => {
     const prefecturesStore = usePrefecturesStore()
     prefecturesStore.prefectures = [tokyo]
 
-    prefecturesStore.selectDefaultPrefecture()
-    await sleep(wait)
+    await prefecturesStore.selectDefaultPrefecture()
 
     expect(tokyo.isSelected).toBeTruthy()
   })
