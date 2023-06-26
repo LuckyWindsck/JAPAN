@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
+
+import usePrefecture from '@/composables/usePrefecture'
 
 import type { Prefecture } from '@/types/prefecture'
 
 const usePrefecturesStore = defineStore('prefectures', () => {
   // States
-  const defaultPrefecture = ref(/* To be implemented */)
+  const defaultPrefecture = ref<Prefecture['prefName']>('東京都')
   const prefectures = ref<Prefecture[]>([])
 
   // Getters
@@ -18,12 +19,17 @@ const usePrefecturesStore = defineStore('prefectures', () => {
   )
 
   // Actions
-  const selectPrefecture = (selectPrefName) => {
-    /* To be implemented */
+  const selectPrefecture = (selectPrefName: Prefecture['prefName']) => {
+    const found = prefectures.value.find(({ prefName }) => prefName === selectPrefName)
+    if (found === undefined) return
+
+    const prefecture = found
+    const { updateIsSelected } = usePrefecture(prefecture)
+    updateIsSelected(true)
   }
 
   const selectDefaultPrefecture = () => {
-    /* To be implemented */
+    selectPrefecture(defaultPrefecture.value)
   }
 
   return {
