@@ -6,8 +6,14 @@ import { integerFactory, prefectureCountInJapan } from '@/utils/test/factories/f
 import prefecturesFactory from '@/utils/test/factories/prefectures'
 import { tokyo } from '@/utils/test/fixtures/prefectures'
 import { shuffle } from '@/utils/test/helpers/faker'
+import { sleep } from '@/utils/test/helpers/sleep'
 
-describe('Prefectures Store', () => {
+import type { Second } from '@/utils/test/helpers/sleep'
+
+// The reason for waiting is stated in `usePrefecture.spec.ts`
+const wait: Second = 3
+
+describe.concurrent('Prefectures Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
   })
@@ -43,7 +49,7 @@ describe('Prefectures Store', () => {
   })
 
   // Actions
-  it('select specified prefecture', () => {
+  it('select specified prefecture', async () => {
     const prefectureCount = integerFactory({ min: 1, max: prefectureCountInJapan })
     const randomIndex = integerFactory({ min: 0, max: prefectureCount - 1 })
     const prefectures = prefecturesFactory(prefectureCount)
@@ -52,15 +58,17 @@ describe('Prefectures Store', () => {
     const prefecture = prefectures[randomIndex]
 
     prefecturesStore.selectPrefecture(prefecture.prefName)
+    await sleep(wait)
 
     expect(prefecture.isSelected).toBeTruthy()
   })
 
-  it('select default prefecture', () => {
+  it('select default prefecture', async () => {
     const prefecturesStore = usePrefecturesStore()
     prefecturesStore.prefectures = [tokyo]
 
     prefecturesStore.selectDefaultPrefecture()
+    await sleep(wait)
 
     expect(tokyo.isSelected).toBeTruthy()
   })

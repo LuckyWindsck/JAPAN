@@ -10,7 +10,7 @@ const elementCount = integerFactory({ min: 1, max: 10 })
 const template = `<div data-test-class="${testClass}" />`.repeat(elementCount)
 const TestComponent = defineComponent({ template })
 
-describe('DataTestClassPlugin', () => {
+describe.concurrent('DataTestClassPlugin', () => {
   it('can find all elements with findAllByTestClass', () => {
     const wrapper = mount(TestComponent)
     const { findAllByTestClass } = DataTestClassPlugin(wrapper)

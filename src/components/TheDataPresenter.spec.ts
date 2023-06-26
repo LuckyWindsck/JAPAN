@@ -13,7 +13,7 @@ type TLabel = A2A<LineChartPropsType['labels']>
 type TDatasets = A2A<LineChartPropsType['datasets']>
 type TData = A2A<ArrayElement<TDatasets>['data']>
 
-describe('TheDataPresenter', () => {
+describe.concurrent('TheDataPresenter', () => {
   it('renders a line chart that shows population transition', () => {
     const wrapper = mount(TheDataPresenter, {
       shallow: true,

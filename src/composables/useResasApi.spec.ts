@@ -8,7 +8,7 @@ import type { PopulationCompositionData, PrefectureData } from '@/types/search-r
 
 // We don't mock HTTP requests, since we want to test if the fetch composable really works.
 
-describe('useResasApi', () => {
+describe.concurrent('useResasApi', () => {
   it('fetch prefectures data from RESAS API', async () => {
     const { data } = await useResasApi<PrefectureData[]>('/api/v1/prefectures')
 
