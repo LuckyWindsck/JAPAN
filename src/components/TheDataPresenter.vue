@@ -11,43 +11,46 @@ import type { PopulationInTotal } from '@/types/search-response'
 type NonNullablePopulationComposition = {
   populationComposition: NonNullable<Prefecture['populationComposition']>
 }
+type FetchedPrefecture = Prefecture & NonNullablePopulationComposition
+
+const getPopulationInTotal = (prefecture: FetchedPrefecture) => {
+  const { populationComposition } = prefecture
+  const found = populationComposition.data.find(
+    (data): data is PopulationInTotal => data.label === '総人口',
+  )
+  if (found === undefined) throw Error('RESAS API return incorrect data')
+
+  const populationInTotal = found
+
+  return populationInTotal
+}
 
 const prefecturesStore = usePrefecturesStore()
 const { selectedPrefectures } = storeToRefs(prefecturesStore)
 
 const displayedPrefectures = computed(() =>
   selectedPrefectures.value.filter(
-    (prefecture): prefecture is Prefecture & NonNullablePopulationComposition =>
-      prefecture.populationComposition !== null,
+    (prefecture): prefecture is FetchedPrefecture => prefecture.populationComposition !== null,
   ),
 )
 
 const labels = computed(() => {
   if (displayedPrefectures.value.length === 0) return []
 
-  const { populationComposition } = displayedPrefectures.value[0]
-  const found = populationComposition.data.find(({ label }) => label === '総人口')
-  if (found === undefined) throw Error('RESAS API return incorrect data')
-
-  const populationInTotal = found as PopulationInTotal
+  const prefecture = displayedPrefectures.value[0]
+  const populationInTotal = getPopulationInTotal(prefecture)
 
   return populationInTotal.data.map(({ year }) => String(year))
 })
 
 const datasets = computed(() =>
-  displayedPrefectures.value.flatMap((prefecture) => {
-    const { populationComposition } = prefecture
-    const found = populationComposition.data.find(({ label }) => label === '総人口')
-    if (found === undefined) throw Error('RESAS API return incorrect data')
+  displayedPrefectures.value.map((prefecture) => {
+    const populationInTotal = getPopulationInTotal(prefecture)
 
-    const populationInTotal = found as PopulationInTotal
-
-    return [
-      {
-        label: prefecture.prefName,
-        data: populationInTotal.data.map(({ value }) => value),
-      },
-    ]
+    return {
+      label: prefecture.prefName,
+      data: populationInTotal.data.map(({ value }) => value),
+    }
   }),
 )
 </script>
