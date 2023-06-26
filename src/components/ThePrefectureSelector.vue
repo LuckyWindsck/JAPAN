@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-
 import AppCheckboxPrefecture from '@/components/AppCheckboxPrefecture.vue'
 import usePrefecture from '@/composables/usePrefecture'
 import usePrefecturesStore from '@/stores/prefectures'
 
 const prefecturesStore = usePrefecturesStore()
-const { prefectures } = storeToRefs(prefecturesStore)
 </script>
 
 <template>
@@ -15,7 +12,7 @@ const { prefectures } = storeToRefs(prefecturesStore)
          > @update:is-selected="updatePrefecture(prefecture)"
          So we wrap updatePrefecture to solve this problem. -->
     <AppCheckboxPrefecture
-      v-for="prefecture of prefectures"
+      v-for="prefecture of prefecturesStore.prefectures"
       :key="prefecture.prefCode"
       :pref-code="prefecture.prefCode"
       :pref-name="prefecture.prefName"
