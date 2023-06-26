@@ -15,4 +15,4 @@ const prefactureFactory = (options: PrefactureFactoryOption = {}): Prefecture =>
   return { ...randomPrefecture, ...options }
 }
 
-export default prefactureFactory
+export { prefactureFactory }

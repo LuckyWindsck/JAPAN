@@ -13,4 +13,4 @@ const DataTestClassPlugin = (wrapper: VueWrapper) => {
   }
 }
 
-export default DataTestClassPlugin
+export { DataTestClassPlugin }

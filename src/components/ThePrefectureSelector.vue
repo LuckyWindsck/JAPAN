@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppCheckboxPrefecture from '@/components/AppCheckboxPrefecture.vue'
-import usePrefecture from '@/composables/usePrefecture'
-import usePrefecturesStore from '@/stores/prefectures'
+import { usePrefecture } from '@/composables/usePrefecture'
+import { usePrefecturesStore } from '@/stores/prefectures'
 
 const prefecturesStore = usePrefecturesStore()
 </script>

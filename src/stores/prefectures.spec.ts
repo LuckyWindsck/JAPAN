@@ -1,9 +1,9 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import usePrefecturesStore from '@/stores/prefectures'
+import { usePrefecturesStore } from '@/stores/prefectures'
 import { integerFactory, prefectureCountInJapan } from '@/utils/test/factories/faker'
-import prefecturesFactory from '@/utils/test/factories/prefectures'
+import { prefecturesFactory } from '@/utils/test/factories/prefectures'
 import { tokyo } from '@/utils/test/fixtures/prefectures'
 import { shuffle } from '@/utils/test/helpers/faker'
 

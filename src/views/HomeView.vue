@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import TheDataPresenter from '@/components/TheDataPresenter.vue'
 import ThePrefectureSelector from '@/components/ThePrefectureSelector.vue'
-import useResasApi from '@/composables/useResasApi'
-import usePrefecturesStore from '@/stores/prefectures'
+import { useResasApi } from '@/composables/useResasApi'
+import { usePrefecturesStore } from '@/stores/prefectures'
 
 import type { PrefectureData } from '@/types/search-response'
 

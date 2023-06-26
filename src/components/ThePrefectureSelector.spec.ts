@@ -4,15 +4,15 @@ import { describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
 import ThePrefectureSelector from '@/components/ThePrefectureSelector.vue'
-import useResasApi from '@/composables/useResasApi'
-import usePrefecturesStore from '@/stores/prefectures'
+import { useResasApi } from '@/composables/useResasApi'
+import { usePrefecturesStore } from '@/stores/prefectures'
 import { integerFactory, prefectureCountInJapan } from '@/utils/test/factories/faker'
-import prefactureFactory from '@/utils/test/factories/prefecture'
-import prefecturesFactory from '@/utils/test/factories/prefectures'
+import { prefactureFactory } from '@/utils/test/factories/prefecture'
+import { prefecturesFactory } from '@/utils/test/factories/prefectures'
 import { nonNullPopulationComposition } from '@/utils/test/fixtures/prefectures'
-import assertions from '@/utils/test/helpers/assertions'
+import { assertions } from '@/utils/test/helpers/assertions'
 
-vi.mock('@/composables/useResasApi', () => ({ default: vi.fn() }))
+vi.mock('@/composables/useResasApi', () => ({ useResasApi: vi.fn() }))
 
 describe.concurrent('ThePrefectureSelector', () => {
   it('renders correct number of prefecture checkboxes', async () => {

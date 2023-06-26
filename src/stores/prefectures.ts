@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-import usePrefecture from '@/composables/usePrefecture'
+import { usePrefecture } from '@/composables/usePrefecture'
 
 import type { Prefecture } from '@/types/prefecture'
 
@@ -45,4 +45,4 @@ const usePrefecturesStore = defineStore('prefectures', () => {
   }
 })
 
-export default usePrefecturesStore
+export { usePrefecturesStore }

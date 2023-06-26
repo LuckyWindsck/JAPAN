@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import usePrefecture from '@/composables/usePrefecture'
-import prefactureFactory from '@/utils/test/factories/prefecture'
+import { usePrefecture } from '@/composables/usePrefecture'
+import { prefactureFactory } from '@/utils/test/factories/prefecture'
 import { nonNullPopulationComposition } from '@/utils/test/fixtures/prefectures'
 
 describe.concurrent('usePrefecture', () => {
