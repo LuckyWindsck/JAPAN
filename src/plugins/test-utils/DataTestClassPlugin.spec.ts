@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { defineComponent } from 'vue'
 
-import DataTestClassPlugin from '@/plugins/test-utils/DataTestClassPlugin'
+import { DataTestClassPlugin } from '@/plugins/test-utils/DataTestClassPlugin'
 import { integerFactory, testClassFactory } from '@/utils/test/factories/faker'
 
 const testClass = testClassFactory()

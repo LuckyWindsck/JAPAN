@@ -44,6 +44,10 @@ const importRules = {
       optionalDependencies: false,
     },
   ],
+  // Prefer named-export for better tree-shaking and enforcing style:
+  // > default import / default export: vue components & css
+  // > named-import / named-export: others
+  'import/prefer-default-export': 'off',
 }
 
 module.exports = {

@@ -29,4 +29,4 @@ const prefecturesFactory = (length: number, options: PrefacturesFactoryOption = 
   return shuffle(prefectures).slice(0, length)
 }
 
-export default prefecturesFactory
+export { prefecturesFactory }

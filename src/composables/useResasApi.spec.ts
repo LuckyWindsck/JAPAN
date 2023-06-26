@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion -- We will assert that data.value is not undefined */
 import { describe, expect, it } from 'vitest'
 
-import useResasApi from '@/composables/useResasApi'
+import { useResasApi } from '@/composables/useResasApi'
 import { tokyo } from '@/utils/test/fixtures/prefectures'
 
 import type { PopulationCompositionData, PrefectureData } from '@/types/search-response'

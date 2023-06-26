@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
 import TheLineChart from '@/components/TheLineChart.vue'
-import usePrefecturesStore from '@/stores/prefectures'
+import { usePrefecturesStore } from '@/stores/prefectures'
 
 import type { Prefecture } from '@/types/prefecture'
 import type { PopulationInTotal } from '@/types/search-response'

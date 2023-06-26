@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest'
 import TheDataPresenter from '@/components/TheDataPresenter.vue'
 import TheLineChart from '@/components/TheLineChart.vue'
 import { hokkaido, kyoto, okinawa, tokyo } from '@/utils/test/fixtures/prefectures'
-import assertions from '@/utils/test/helpers/assertions'
+import { assertions } from '@/utils/test/helpers/assertions'
 
 import type { A2A, ArrayElement, ComponentProps } from '@/types/utility'
 

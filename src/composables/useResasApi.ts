@@ -10,4 +10,4 @@ const resasAPI = axios.create({ baseURL })
 const useResasApi = <T>(path: string, options?: UseAxiosOptions<SearchResponse<T>>) =>
   useAxios<SearchResponse<T>>(path, resasAPI, { immediate: true, ...options })
 
-export default useResasApi
+export { useResasApi }

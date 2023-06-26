@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import useResasApi from './useResasApi'
+import { useResasApi } from './useResasApi'
 
 import type { Prefecture } from '@/types/prefecture'
 import type { PopulationCompositionData } from '@/types/search-response'
@@ -42,4 +42,4 @@ const usePrefecture = (prefecture: Prefecture) => {
   }
 }
 
-export default usePrefecture
+export { usePrefecture }
