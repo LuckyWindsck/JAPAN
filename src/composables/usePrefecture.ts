@@ -6,7 +6,12 @@ import type { PopulationCompositionData } from '@/types/search-response'
 
 const usePrefecture = (prefecture: Prefecture) => {
   const fetchPopulationComposition = () => {
-    const path = `/api/v1/population/composition/perYear?prefCode=${prefecture.prefCode}`
+    const params = new URLSearchParams({
+      prefCode: String(prefecture.prefCode),
+      cityCode: '-',
+    })
+
+    const path = `/api/v1/population/composition/perYear?${params.toString()}`
 
     return useResasApi<PopulationCompositionData>(path, {
       onSuccess(data) {
