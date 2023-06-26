@@ -11,6 +11,13 @@ const template = `<div data-test-class="${testClass}" />`.repeat(elementCount)
 const TestComponent = defineComponent({ template })
 
 describe.concurrent('DataTestClassPlugin', () => {
+  it('can find element with findByTestClass', () => {
+    const wrapper = mount(TestComponent)
+    const { findByTestClass } = DataTestClassPlugin(wrapper)
+
+    expect(findByTestClass(testClass).exists()).toBeTruthy()
+  })
+
   it('can find all elements with findAllByTestClass', () => {
     const wrapper = mount(TestComponent)
     const { findAllByTestClass } = DataTestClassPlugin(wrapper)
