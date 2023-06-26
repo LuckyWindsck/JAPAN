@@ -7,7 +7,6 @@ import prefactureFactory from '@/utils/test/factories/prefecture'
 describe.concurrent('AppCheckboxPrefecture', () => {
   it('renders prefecture name', () => {
     const prefecture = prefactureFactory()
-
     const wrapper = mount(AppCheckboxPrefecture, { props: prefecture })
 
     expect(wrapper.text()).toContain(prefecture.prefName)

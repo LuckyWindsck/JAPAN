@@ -10,6 +10,7 @@ import { integerFactory, prefectureCountInJapan } from '@/utils/test/factories/f
 import prefactureFactory from '@/utils/test/factories/prefecture'
 import prefecturesFactory from '@/utils/test/factories/prefectures'
 import { nonNullPopulationComposition } from '@/utils/test/fixtures/prefectures'
+import assertions from '@/utils/test/helpers/assertions'
 
 vi.mock('@/composables/useResasApi', () => ({ default: vi.fn() }))
 
@@ -37,18 +38,17 @@ describe.concurrent('ThePrefectureSelector', () => {
     expect(prefectureCheckboxes).toHaveLength(prefectureCount)
 
     // Check for label text rendering
-    const checkboxTexts = prefectureCheckboxes.map((prefectureCheckbox) =>
-      prefectureCheckbox.text(),
-    )
-    const generatedPrefectureNames = generatedPrefectures.map(
-      (generatedPrefecture) => generatedPrefecture.prefName,
-    )
+    const checkboxTexts = prefectureCheckboxes.map((checkbox) => checkbox.text())
+    const generatedPrefectureNames = generatedPrefectures.map(({ prefName }) => prefName)
 
-    expect(checkboxTexts).toEqual(expect.arrayContaining(generatedPrefectureNames))
-    expect(generatedPrefectureNames).toEqual(expect.arrayContaining(checkboxTexts))
+    assertions.arrayWithExactContents(generatedPrefectureNames, checkboxTexts)
   })
 
   it('fetches population composition data', async () => {
+    const prefecture = prefactureFactory({
+      populationComposition: null,
+      isSelected: false,
+    })
     const wrapper = mount(ThePrefectureSelector, {
       global: {
         plugins: [
@@ -56,40 +56,21 @@ describe.concurrent('ThePrefectureSelector', () => {
             createSpy: vi.fn,
             initialState: {
               prefectures: {
-                prefectures: [
-                  prefactureFactory({
-                    populationComposition: null,
-                    isSelected: false,
-                  }),
-                ],
+                prefectures: [prefecture],
               },
             },
           }),
         ],
       },
     })
-    const prefecturesStore = usePrefecturesStore()
-    const prefectureCheckboxes = wrapper.findAllByTestClass('prefecture-checkbox')
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- This must exist, because that is how we set the initial state.
-    const prefectureFound = prefecturesStore.prefectures.find(
-      (prefecture) => !prefecture.isSelected && prefecture.populationComposition === null,
-    )!
-    const testPrefectureName = prefectureFound.prefName
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- It's tested in the 'Check for label text rendering' part of test 'renders correct number of prefecture checkboxes'
-    const prefectureCheckboxFound = prefectureCheckboxes.find((checkbox) =>
-      checkbox.text().includes(testPrefectureName),
-    )!
-
-    const prefectureCheckboxComponent = prefectureCheckboxFound
-    const checkbox = prefectureCheckboxComponent.find('input[type="checkbox"]')
+    const checkbox = wrapper.findByTestClass('prefecture-checkbox').find('input[type="checkbox"]')
 
     // Should fetch data only when the checkbox is checked and population composition does not exist
     await checkbox.setValue(true) // Check for the first time
     expect(useResasApi).toHaveBeenCalledTimes(1)
 
     // Should not fetch data when population composition already exists, even if checkbox is checked
-    prefectureFound.populationComposition = nonNullPopulationComposition
+    prefecture.populationComposition = nonNullPopulationComposition
     await checkbox.setValue(false) // Uncheck
     await checkbox.setValue(true) // Check again
 
