@@ -12,28 +12,17 @@ import {
 import { computed, ref } from 'vue'
 import { Line } from 'vue-chartjs'
 
-import type { ChartData, ChartOptions, ChartTypeRegistry } from 'chart.js'
-import type { TypedChartComponent } from 'node_modules/vue-chartjs/dist/types'
+import type { ChartType } from '@/types/utility'
+import type { ChartData, ChartOptions } from 'chart.js'
 import type { PropType } from 'vue'
 
-// Type
-
-type ExtractChartType<ChartComponent> = ChartComponent extends TypedChartComponent<
-  infer TType extends keyof ChartTypeRegistry
->
-  ? TType
-  : never
-
-type TType = ExtractChartType<typeof Line>
-type TData = number[]
+type TType = ChartType<typeof Line>
 type TLabel = string
-
+type TData = number[]
 type TDataSet = {
   label: TLabel
   data: TData
 }
-
-// Props
 
 const props = defineProps({
   labels: {
@@ -46,8 +35,6 @@ const props = defineProps({
   },
 })
 
-// Initialize
-
 ChartJS.register(
   CategoryScale, // X scale
   LinearScale, // Y scale
@@ -57,8 +44,6 @@ ChartJS.register(
   Tooltip,
   Colors,
 )
-
-// Reactivity
 
 const chartData = computed<ChartData<TType, TData, TLabel>>(() => ({
   labels: props.labels,
