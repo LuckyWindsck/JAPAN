@@ -1,4 +1,4 @@
-export type PopulationInTotal = {
+type PopulationInTotal = {
   label: '総人口'
   data: {
     year: number
@@ -6,7 +6,7 @@ export type PopulationInTotal = {
   }[]
 }
 
-export type PopulationByAge = {
+type PopulationByAge = {
   label: '年少人口' | '生産年齢人口' | '老年人口'
   data: {
     year: number
@@ -15,17 +15,25 @@ export type PopulationByAge = {
   }[]
 }
 
-export type PrefectureData = {
+type PrefectureData = {
   prefCode: number
   prefName: string
 }
 
-export type PopulationCompositionData = {
+type PopulationCompositionData = {
   boundaryYear: number
   data: (PopulationInTotal | PopulationByAge)[]
 }
 
-export type SearchResponse<T> = {
+type SearchResponse<T> = {
   message: string | null
   result: T
+}
+
+export type {
+  PopulationInTotal,
+  PopulationByAge,
+  PrefectureData,
+  PopulationCompositionData,
+  SearchResponse,
 }

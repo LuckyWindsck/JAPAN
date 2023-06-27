@@ -1,6 +1,9 @@
+import type { PopulationCompositionDataLabel } from '@/composables/useConstants'
 import type { PopulationCompositionData, PrefectureData } from '@/types/search-response'
 
-export type Prefecture = PrefectureData & {
+type Prefecture = PrefectureData & {
   populationComposition: PopulationCompositionData | null
   isSelected: boolean
 }
+
+export type { PopulationCompositionDataLabel, Prefecture }
