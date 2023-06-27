@@ -13,7 +13,7 @@ import { computed, ref } from 'vue'
 import { Line } from 'vue-chartjs'
 
 import type { ChartType } from '@/types/utility'
-import type { ChartData, ChartOptions } from 'chart.js'
+import type { ChartData, ChartOptions, Plugin } from 'chart.js'
 import type { PropType } from 'vue'
 
 type TType = ChartType<typeof Line>
@@ -34,6 +34,37 @@ const props = defineProps({
     required: true,
   },
 })
+
+const loadingOverlay: Plugin = {
+  id: 'loadingOverlay',
+  // It should be after `beforeRender` hook.
+  beforeDraw: (chart) => {
+    if (chart.data.datasets.length !== 0) return
+
+    const {
+      ctx,
+      chartArea: { left, top, width, height },
+    } = chart
+
+    // Render background
+    ctx.fillStyle = '#C0C0C080'
+    ctx.fillRect(left, top, width, height)
+
+    // Render text
+    const viewPortWidth = window.visualViewport?.width ?? 0
+    let size = 1
+    if (viewPortWidth >= 600) size = 2
+    if (viewPortWidth >= 1024) size = 4
+
+    const fontSize = `${size}rem`
+    const fontFamily = 'sans-serif'
+    ctx.font = [fontSize, fontFamily].join(' ')
+    ctx.textAlign = 'center'
+    ctx.fillStyle = 'black'
+    const [x, y] = [left + width / 2, top + height / 2]
+    ctx.fillText('Loading', x, y)
+  },
+}
 
 ChartJS.register(
   CategoryScale, // X scale
@@ -57,11 +88,18 @@ const chartOptions = ref<ChartOptions<TType>>({
     },
   },
 })
+
+const chartPlugins = ref<Plugin<TType>[]>([loadingOverlay])
 </script>
 
 <template>
   <div class="line-chart-container">
-    <Line :data="chartData" :options="chartOptions" data-test-class="line-chart" />
+    <Line
+      :data="chartData"
+      :options="chartOptions"
+      :plugins="chartPlugins"
+      data-test-class="line-chart"
+    />
   </div>
 </template>
 
