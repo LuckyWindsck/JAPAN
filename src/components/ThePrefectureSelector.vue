@@ -8,9 +8,6 @@ const prefecturesStore = usePrefecturesStore()
 
 <template>
   <div class="prefecture-selector">
-    <!-- We are not sure why the following code doesn't work:
-         > @update:is-selected="updatePrefecture(prefecture)"
-         So we wrap updatePrefecture to solve this problem. -->
     <AppCheckboxPrefecture
       v-for="prefecture of prefecturesStore.prefectures"
       :key="prefecture.prefCode"
@@ -25,9 +22,19 @@ const prefecturesStore = usePrefecturesStore()
 
 <style scoped>
 .prefecture-selector {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 1em;
-  column-gap: 2em;
+  display: grid;
+
+  /* 6rem is an appropriate magic number that we test on differenct devices.
+     Basically, we can consider it as:
+     > Checkbox (about 1 rem) + Label gap (0.5 rem) + Label width (4 rem) = 5.5rem
+     and then we round it up to 6 rem. */
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  row-gap: 0.5rem;
+}
+
+@media (width >= 600px) {
+  .prefecture-selector {
+    row-gap: 1rem;
+  }
 }
 </style>
