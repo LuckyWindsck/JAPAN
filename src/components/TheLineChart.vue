@@ -7,6 +7,7 @@ import {
   LineElement,
   LinearScale,
   PointElement,
+  Title,
   Tooltip,
 } from 'chart.js'
 import { computed, ref } from 'vue'
@@ -74,6 +75,7 @@ ChartJS.register(
   PointElement,
   LineElement,
   Legend,
+  Title,
   Tooltip,
   Colors,
 )
@@ -85,7 +87,17 @@ const chartData = computed<ChartData<TType, TData, TLabel>>(() => ({
 
 const chartOptions = ref<ChartOptions<TType>>({
   scales: {
+    x: {
+      title: {
+        display: true,
+        text: '年度',
+      },
+    },
     y: {
+      title: {
+        display: true,
+        text: '人口数',
+      },
       ticks: {
         callback(tickValue) {
           const formatter = new Intl.NumberFormat('ja-JP', { notation: 'compact' })
@@ -100,6 +112,10 @@ const chartOptions = ref<ChartOptions<TType>>({
   plugins: {
     colors: {
       forceOverride: true,
+    },
+    title: {
+      display: true,
+      text: '人口推移',
     },
   },
 })
