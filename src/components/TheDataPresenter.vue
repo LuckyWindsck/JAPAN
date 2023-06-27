@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
 import TheLineChart from '@/components/TheLineChart.vue'
+import TheTypeSwitcherPopulation from '@/components/TheTypeSwitcherPopulation.vue'
 import { usePrefecture } from '@/composables/usePrefecture'
 import { usePrefecturesStore } from '@/stores/prefectures'
 
@@ -46,6 +47,7 @@ const datasets = computed(() =>
 
 <template>
   <div class="the-data-presenter">
+    <TheTypeSwitcherPopulation />
     <TheLineChart
       :labels="labels"
       :datasets="datasets"
@@ -57,6 +59,8 @@ const datasets = computed(() =>
 <style scoped>
 .the-data-presenter {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  row-gap: 1rem;
+  align-items: center;
 }
 </style>
