@@ -32,6 +32,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      VITE_RESAS_API_BASE_URL: ${{ secrets.VITE_RESAS_API_BASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -44,8 +46,6 @@ jobs:
         run: yarn install
       - name: Unit tests
         run: yarn test:unit run
-        env:
-          VITE_RESAS_API_BASE_URL: ${{ secrets.VITE_RESAS_API_BASE_URL }}
       - name: End-to-end tests
         uses: cypress-io/github-action@v5
         with:
