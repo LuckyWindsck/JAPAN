@@ -48,11 +48,24 @@ const usePrefecture = (prefecture: Prefecture) => {
     return undefined
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getPopulationComposityonDataByLabel = <L extends Label>(
     label: L,
   ): PopulationCompositionByLabel<L> => {
-    // To be implemented
+    const { populationComposition } = prefecture
+    if (populationComposition === null) {
+      throw Error(
+        `Prefecture ${prefecture.prefName} does not have population composition data. Please fetch the data first.`,
+      )
+    }
+
+    const found = (populationComposition.data as PopulationCompositionByLabel<L>[]).find(
+      (data) => data.label === label,
+    )
+    if (found === undefined) throw Error('RESAS API return incorrect data')
+
+    const populationInTotal = found
+
+    return populationInTotal
   }
 
   return {
