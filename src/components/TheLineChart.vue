@@ -35,6 +35,9 @@ const props = defineProps({
   },
 })
 
+// TODO: consider about resize
+const viewPortWidth = window.visualViewport?.width ?? 0
+
 const loadingOverlay: Plugin = {
   id: 'loadingOverlay',
   // It should be after `beforeRender` hook.
@@ -51,14 +54,13 @@ const loadingOverlay: Plugin = {
     ctx.fillRect(left, top, width, height)
 
     // Render text
-    const viewPortWidth = window.visualViewport?.width ?? 0
     let size = 1
     if (viewPortWidth >= 600) size = 2
     if (viewPortWidth >= 1024) size = 4
 
     const fontSize = `${size}rem`
     const fontFamily = 'sans-serif'
-    ctx.font = [fontSize, fontFamily].join(' ')
+    ctx.font = `${fontSize} ${fontFamily}`
     ctx.textAlign = 'center'
     ctx.fillStyle = 'black'
     const [x, y] = [left + width / 2, top + height / 2]
@@ -82,6 +84,19 @@ const chartData = computed<ChartData<TType, TData, TLabel>>(() => ({
 }))
 
 const chartOptions = ref<ChartOptions<TType>>({
+  scales: {
+    y: {
+      ticks: {
+        callback(tickValue) {
+          const formatter = new Intl.NumberFormat('ja-JP', { notation: 'compact' })
+          const numericTickValue =
+            typeof tickValue === 'string' ? parseInt(tickValue, 10) : tickValue
+
+          return formatter.format(numericTickValue)
+        },
+      },
+    },
+  },
   plugins: {
     colors: {
       forceOverride: true,
