@@ -1,14 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { useResasApi } from './useResasApi'
 
-import type { Prefecture } from '@/types/prefecture'
+import type { PopulationCompositionDataLabel as Label, Prefecture } from '@/types/prefecture'
 import type {
   PopulationByAge,
   PopulationCompositionData,
   PopulationInTotal,
 } from '@/types/search-response'
-
-type Label = PopulationCompositionData['data'][0]['label']
 
 type PopulationCompositionByLabel<L extends Label> = L extends PopulationInTotal['label']
   ? PopulationInTotal
