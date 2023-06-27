@@ -86,6 +86,7 @@ const chartData = computed<ChartData<TType, TData, TLabel>>(() => ({
 }))
 
 const chartOptions = ref<ChartOptions<TType>>({
+  aspectRatio: viewPortWidth >= 600 ? 2 : 1,
   scales: {
     x: {
       title: {
@@ -137,11 +138,7 @@ const chartPlugins = ref<Plugin<TType>[]>([loadingOverlay])
 <style scoped>
 .line-chart-container {
   position: relative;
-
-  display: flex;
-  justify-content: center;
-
-  width: 80vw;
-  height: 40vh;
+  width: 100%;
+  height: 100%;
 }
 </style>
