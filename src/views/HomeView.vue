@@ -29,4 +29,10 @@ useResasApi<PrefectureData[]>('/api/v1/prefectures', {
   </main>
 </template>
 
-<!-- <style scoped></style> -->
+<style scoped>
+main {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+</style>
