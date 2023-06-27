@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, provide, ref } from 'vue'
 
 import TheLineChart from '@/components/TheLineChart.vue'
 import TheTypeSwitcherPopulation from '@/components/TheTypeSwitcherPopulation.vue'
+import { useConstants } from '@/composables/useConstants'
 import { usePrefecture } from '@/composables/usePrefecture'
 import { usePrefecturesStore } from '@/stores/prefectures'
 
-import type { Prefecture } from '@/types/prefecture'
+import type { PopulationCompositionDataLabel as Label, Prefecture } from '@/types/prefecture'
 
 type NonNullablePopulationComposition = {
   populationComposition: NonNullable<Prefecture['populationComposition']>
@@ -16,6 +17,9 @@ type FetchedPrefecture = Prefecture & NonNullablePopulationComposition
 
 const prefecturesStore = usePrefecturesStore()
 const { selectedPrefectures } = storeToRefs(prefecturesStore)
+
+const selectedDataType = ref<Label>(useConstants().defaultSelectedDataType)
+provide('selectedDataType', selectedDataType)
 
 const displayedPrefectures = computed(() =>
   selectedPrefectures.value.filter(
@@ -27,19 +31,22 @@ const labels = computed(() => {
   if (displayedPrefectures.value.length === 0) return []
 
   const prefecture = displayedPrefectures.value[0]
-  const populationInTotal = usePrefecture(prefecture).getPopulationComposityonDataByLabel('総人口')
+  const { data } = usePrefecture(prefecture).getPopulationComposityonDataByLabel(
+    selectedDataType.value,
+  )
 
-  return populationInTotal.data.map(({ year }) => String(year))
+  return data.map(({ year }) => String(year))
 })
 
 const datasets = computed(() =>
   displayedPrefectures.value.map((prefecture) => {
-    const populationInTotal =
-      usePrefecture(prefecture).getPopulationComposityonDataByLabel('総人口')
+    const { data } = usePrefecture(prefecture).getPopulationComposityonDataByLabel(
+      selectedDataType.value,
+    )
 
     return {
       label: prefecture.prefName,
-      data: populationInTotal.data.map(({ value }) => value),
+      data: data.map(({ value }) => value),
     }
   }),
 )
