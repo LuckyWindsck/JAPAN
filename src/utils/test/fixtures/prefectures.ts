@@ -54,6 +54,30 @@ export const tokyo: Prefecture = {
           { year: 1970, value: 11408071 },
         ],
       },
+      {
+        label: '年少人口',
+        data: [
+          { year: 1960, value: 2249052, rate: 23.2 },
+          { year: 1965, value: 2216945, rate: 20.3 },
+          { year: 1970, value: 2400630, rate: 21 },
+        ],
+      },
+      {
+        label: '生産年齢人口',
+        data: [
+          { year: 1960, value: 7067087, rate: 72.9 },
+          { year: 1965, value: 8183336, rate: 75.2 },
+          { year: 1970, value: 8416630, rate: 73.7 },
+        ],
+      },
+      {
+        label: '老年人口',
+        data: [
+          { year: 1960, value: 367663, rate: 3.7 },
+          { year: 1965, value: 468963, rate: 4.3 },
+          { year: 1970, value: 590811, rate: 5.1 },
+        ],
+      },
     ],
   },
   isSelected: true,

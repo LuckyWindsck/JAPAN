@@ -2,7 +2,19 @@
 import { useResasApi } from './useResasApi'
 
 import type { Prefecture } from '@/types/prefecture'
-import type { PopulationCompositionData } from '@/types/search-response'
+import type {
+  PopulationByAge,
+  PopulationCompositionData,
+  PopulationInTotal,
+} from '@/types/search-response'
+
+type Label = PopulationCompositionData['data'][0]['label']
+
+type PopulationCompositionByLabel<L extends Label> = L extends PopulationInTotal['label']
+  ? PopulationInTotal
+  : L extends PopulationByAge['label']
+  ? PopulationByAge
+  : never
 
 const usePrefecture = (prefecture: Prefecture) => {
   const fetchPopulationComposition = () => {
@@ -36,9 +48,17 @@ const usePrefecture = (prefecture: Prefecture) => {
     return undefined
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getPopulationComposityonDataByLabel = <L extends Label>(
+    label: L,
+  ): PopulationCompositionByLabel<L> => {
+    // To be implemented
+  }
+
   return {
     fetchPopulationComposition,
     updateIsSelected,
+    getPopulationComposityonDataByLabel,
   }
 }
 

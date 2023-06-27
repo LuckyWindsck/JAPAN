@@ -2,19 +2,20 @@ import { describe, expect, it } from 'vitest'
 
 import { usePrefecture } from '@/composables/usePrefecture'
 import { prefactureFactory } from '@/utils/test/factories/prefecture'
-import { nonNullPopulationComposition } from '@/utils/test/fixtures/prefectures'
+import { nonNullPopulationComposition, tokyo } from '@/utils/test/fixtures/prefectures'
 
 describe.concurrent('usePrefecture', () => {
-  it('fetch prefecture composition', async () => {
-    const prefecture = prefactureFactory({
-      populationComposition: null,
-      isSelected: true,
+  describe.concurrent('fetchPopulationComposition', () => {
+    it('fetch data', async () => {
+      const prefecture = prefactureFactory({
+        populationComposition: null,
+        isSelected: true,
+      })
+
+      await usePrefecture(prefecture).fetchPopulationComposition()
+
+      expect(prefecture.populationComposition).not.toBeNull()
     })
-    const { fetchPopulationComposition } = usePrefecture(prefecture)
-
-    await fetchPopulationComposition()
-
-    expect(prefecture.populationComposition).not.toBeNull()
   })
 
   describe.concurrent('updateIsSelected', () => {
@@ -42,9 +43,8 @@ describe.concurrent('usePrefecture', () => {
         populationComposition: null,
         isSelected: false,
       })
-      const { updateIsSelected } = usePrefecture(prefecture)
 
-      await updateIsSelected(true)
+      await usePrefecture(prefecture).updateIsSelected(true)
 
       expect(prefecture.populationComposition).not.toBeNull()
     })
@@ -72,6 +72,18 @@ describe.concurrent('usePrefecture', () => {
       expect(prefecture1.populationComposition).toBe(nonNullPopulationComposition)
       expect(prefecture2.populationComposition).toBe(null)
       expect(prefecture3.populationComposition).toBe(nonNullPopulationComposition)
+    })
+  })
+
+  describe.concurrent('getPopulationComposityonDataByLabel', () => {
+    it('can get corresponding population composition data by label', () => {
+      const labels = ['総人口', '年少人口', '生産年齢人口', '老年人口'] as const
+      const { getPopulationComposityonDataByLabel } = usePrefecture(tokyo)
+
+      labels.forEach((label) => {
+        const data = getPopulationComposityonDataByLabel(label)
+        expect(data.label).toBe(label)
+      })
     })
   })
 })
